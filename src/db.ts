@@ -17,18 +17,18 @@ function parseDatabaseUrl(url:any) {
 
     return {
         database: 'd57np5javc2q7k',
-        protocol: matches[1],
+        // protocol: matches[1],
         username: matches[2] != undefined ? matches[2].split(':')[0] : undefined,
         password: matches[2] != undefined ? matches[2].split(':')[1] : undefined,
         // hostname: matches[3],
         host: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[0] : undefined,
         port: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[1] : undefined,
-        segments : matches[4] != undefined ? matches[4].split('/') : undefined,
-        params: params,
+        // segments : matches[4] != undefined ? matches[4].split('/') : undefined,
+        // params: params,
         dialectOptions: {
             ssl: {
                 require: true,
-                rejectUnauthorized: false
+                // rejectUnauthorized: false
             }
         }
     };
