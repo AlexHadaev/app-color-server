@@ -20,11 +20,17 @@ function parseDatabaseUrl(url:any) {
         protocol: matches[1],
         username: matches[2] != undefined ? matches[2].split(':')[0] : undefined,
         password: matches[2] != undefined ? matches[2].split(':')[1] : undefined,
-        // host: matches[3],
+        // hostname: matches[3],
         host: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[0] : undefined,
         port: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[1] : undefined,
         segments : matches[4] != undefined ? matches[4].split('/') : undefined,
-        params: params
+        params: params,
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        }
     };
 }
 
@@ -46,6 +52,8 @@ const optionsDevelopment = {
 }
 console.log(optionsProduction);
 // Create conditional Sequelize database options here
+
+
 const sequelizeOptions = process.env.NODE_ENV === 'production'
     ? optionsProduction
     : optionsDevelopment
@@ -55,12 +63,7 @@ export const sequelize = new Sequelize({
     logging: false,
     ...sequelizeOptions, // Spread options here
     models: [Color, Type],
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false
-        }
-    }
+
     // storage: ':memory:',
     // models: [__dirname + '/models'], // or [Player, Team],
 });
