@@ -17,7 +17,7 @@ function parseDatabaseUrl(url:any) {
 
     return {
         protocol: matches[1],
-        user: matches[2] != undefined ? matches[2].split(':')[0] : undefined,
+        username: matches[2] != undefined ? matches[2].split(':')[0] : undefined,
         password: matches[2] != undefined ? matches[2].split(':')[1] : undefined,
         host: matches[3],
         hostname: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[0] : undefined,
