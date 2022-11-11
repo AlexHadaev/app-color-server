@@ -4,7 +4,8 @@ import express, {Application, Request, Response} from "express";
 import {sequelize} from "./src/db";
 import cors from "cors"
 import router from "./src/routes";
-import errorHandler from './src/middleware/ErrorHandlingMiddleware'
+import errorHandler from './src/middleware/ErrorHandlingMiddleware';
+import {cool} from "cool-ascii-faces";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.get("/", (req: Request, res: Response): Response => {
     return res.json({ message: "Sequelize Example 🤟" });
 });
+app.get('/cool', (req, res) => res.send(cool()))
 app.use(errorHandler)
 
 const start = async (): Promise<void> => {
