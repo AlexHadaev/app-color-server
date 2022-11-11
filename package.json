@@ -4,7 +4,6 @@
   "description": "server",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev ./index.ts",
     "start": "ts-node-dev main.ts",
     "startd": "nodemon main.ts"
   },

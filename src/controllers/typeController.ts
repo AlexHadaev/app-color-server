@@ -7,7 +7,6 @@ class TypeController{
         const {name} = req.body
         console.log(name);
         try{
-
             const type = await Type.create({name})
             return res.json(type)
         } catch (e: any) {
@@ -23,6 +22,12 @@ class TypeController{
             next(ApiError.badRequest(e.message))
         }
 
+    }
+
+    async delete(req: Request, res: Response){
+        const {id} = req.params
+        const type = await Type.destroy({where: {id}})
+        return res.json(type)
     }
 }
 export const typeController = new TypeController()
