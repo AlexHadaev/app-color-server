@@ -91,7 +91,7 @@ class ColorController {
 
                 if ( r > 140 && r >= (g + 30) && g > (b + 30)) {
                     addItem(items, typeColor.orange, r, g, b, alpha, shadow)
-                } else if (r >= (g - 40) && g > (b + 40)) {
+                } else if  (r >= (g - 10) && g > 110 && g > (b + 40)) {
                     addItem(items, typeColor.yellow, r, g, b, alpha, shadow)
                 } else if ((r <= g + 10 || r <= g - 10) && (g <= b + 10 || g <= b - 10) && (b <= r + 10 || b <= r - 10)) {
                     addItem(items, typeColor.grey, r, g, b, alpha, shadow)
@@ -103,11 +103,11 @@ class ColorController {
                     addItem(items, typeColor.brown, r, g, b, alpha, shadow)
                 } else if (r > (g + 10) && b > (g + 10)) {
                     addItem(items, typeColor.purple, r, g, b, alpha, shadow)
-                } else if (r > b && r > g) {
+                } else if (r >= b && r >= g) {
                     addItem(items, typeColor.red, r, g, b, alpha, shadow)
-                } else if (g > b && g > r) {
+                } else if (g >= b && g >= r) {
                     addItem(items, typeColor.green, r, g, b, alpha, shadow)
-                } else if (b > r && b > g) {
+                } else if (b >= r && b >= g) {
                     addItem(items, typeColor.blue, r, g, b, alpha, shadow)
                 }
 
@@ -151,10 +151,10 @@ class ColorController {
                 colors = await Color.findAndCountAll({limit, offset, order: sequelize.random()})
             }
             if (!random && !typeId && !query) {
-                colors = await Color.findAndCountAll({limit, offset})
+                colors = await Color.findAndCountAll({limit, offset, order: [['updatedAt', 'DESC']]})
             }
             if (!random && typeId) {
-                colors = await Color.findAndCountAll({where: {typeId}, limit, offset})
+                colors = await Color.findAndCountAll({where: {typeId}, limit, offset, order: [['updatedAt', 'DESC']]})
             }
             if (random && typeId) {
                 limit = parseInt(random) || 12
