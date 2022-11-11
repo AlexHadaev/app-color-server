@@ -10,7 +10,6 @@ function addItem(items: Array<{}>, typeColor: number, r: number, g: number, b: n
     if(typeColor === 9){
         j = count - 1
     }
-    // console.log(alpha);
     while (j <= count) {
         j++;
         let sh: number = shadow? j / 10 : alpha;
@@ -34,7 +33,6 @@ function addItem(items: Array<{}>, typeColor: number, r: number, g: number, b: n
             colorHEXA: '#' + outParts.join('').toUpperCase()
         })
     }
-    // console.log(items);
     return items
 }
 
@@ -42,7 +40,6 @@ class ColorController {
     async bulkCreate(req: Request, res: Response, next: any) {
         try {
             let {count, shadow} = req.body //generate = count color
-            // console.log(count, shadow, req.body);
             let colors: string[] = [];
             let i: number = 1;
             let length: number = parseInt(count);
@@ -115,7 +112,6 @@ class ColorController {
                 }
 
             })
-            // console.log(items);
             const colorsGenerate = await Color.bulkCreate(items)
 
             return res.json(colorsGenerate)
@@ -144,7 +140,6 @@ class ColorController {
         try {
             let typeId: any, limit: any, page: any, random: any, query: any;
             ({typeId, limit, page, random, query} = req.query);
-            // console.log(query);
             page = page || 1
             limit = limit || 12
 
@@ -166,7 +161,6 @@ class ColorController {
                 colors = await Color.findAndCountAll({where: {typeId}, limit, offset, order: sequelize.random()})
             }
             if (!random && !typeId && query) {
-                // console.log(query);
                 colors = await Color.findAndCountAll({
                     where: {
                         colorHEXA: {
@@ -176,7 +170,6 @@ class ColorController {
                 })
             }
             if (!random && typeId && query) {
-                // console.log(typeId, query);
                 colors = await Color.findAndCountAll({
                     where: {
                         typeId: typeId,
@@ -198,7 +191,6 @@ class ColorController {
         try {
             const {id} = req.params
             const {shadows} = req.query
-            // console.log('param= ',shadows , id);
             let color;
             if (!shadows) {
                 color = await Color.findOne(
@@ -213,7 +205,6 @@ class ColorController {
                         where: {id}
                     }
                 ).then((item: any) => {
-                    // console.log('res = ',item.shadow, );
                     return Color.findAndCountAll({
                         where: {shadow: item.shadow},
                         order: [['colorHEXA', 'DESC']],
@@ -224,7 +215,6 @@ class ColorController {
                 })
             }
 
-            // console.log(color);
             return res.json(color)
         } catch (e: any) {
             next(ApiError.badRequest(e.message))

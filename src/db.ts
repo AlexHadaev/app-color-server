@@ -49,7 +49,6 @@ const optionsDevelopment = {
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST
 }
-console.log(optionsProduction);
 
 const sequelizeOptions = process.env.NODE_ENV === 'production'
     ? optionsProduction

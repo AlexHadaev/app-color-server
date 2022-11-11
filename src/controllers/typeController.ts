@@ -5,7 +5,6 @@ import {ApiError} from "../error/ApiError";
 class TypeController{
     async create(req: Request, res: Response, next: any){
         const {name} = req.body
-        console.log(name);
         try{
             const type = await Type.create({name})
             return res.json(type)
