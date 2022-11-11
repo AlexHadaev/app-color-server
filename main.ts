@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors())
 app.use(express.json());
-// app.use('/', router)
+app.use('/', router)
 app.get("/", (req: Request, res: Response): Response => {
     return res.json({ message: "Sequelize Example 🤟" });
 });
