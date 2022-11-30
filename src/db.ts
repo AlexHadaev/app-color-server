@@ -1,48 +1,18 @@
-import {Sequelize} from 'sequelize-typescript';
-import dotenv from "dotenv";
-import {Color, Type} from './models/models';
+import {Sequelize} from 'sequelize-typescript'
+import dotenv from "dotenv"
+import {Color, Type} from './models/models'
 
-dotenv.config();
+dotenv.config()
 
-interface ParsedDatabaseOptions {
-    host: string | undefined
-    port: string | undefined
-    username: string | undefined
-    password: string | undefined
-    database: string | undefined,
-    dialectOptions: {} | undefined
+const optionsProduction = {
+    database: process.env.DB_NAME_SER,
+    username: process.env.DB_USER_SER,
+    password: process.env.DB_PASSWORD_SER,
+    host: process.env.DB_HOST_SER,
+    port: process.env.DB_PORT_SER,
+    dialectOptions: {ssl: {require: true, rejectUnauthorized: false}}
 }
 
-const parseDatabaseUrl = (url: any):ParsedDatabaseOptions => {
-    let pattern = /^(?:([^:\/?#\s]+):\/{2})?(?:([^@\/?#\s]+)@)?([^\/?#\s]+)?(?:\/([^?#\s]*))?(?:[?]([^#\s]+))?\S*$/;
-    let matches: any = url.match(pattern);
-    let params: any = {};
-    if (matches[5] != undefined) {
-        matches[5].split('&').map(function (x: string) {
-            let a = x.split('=');
-            params[a[0]] = a[1];
-        });
-    }
-    return {
-        database: matches[4] != undefined ? matches[4].split('/')[0] : undefined,
-        // protocol: matches[1],
-        username: matches[2] != undefined ? matches[2].split(':')[0] : undefined,
-        password: matches[2] != undefined ? matches[2].split(':')[1] : undefined,
-        // hostname: matches[3],
-        host: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[0] : undefined,
-        port: matches[3] != undefined ? matches[3].split(/:(?=\d+$)/)[1] : undefined,
-        // segments : matches[4] != undefined ? matches[4].split('/') : undefined,
-        // params: params,
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false
-            }
-        }
-    };
-}
-
-const optionsProduction = parseDatabaseUrl(process.env.DATABASE_URL)
 const optionsDevelopment = {
     database: process.env.DB_NAME,
     username: process.env.DB_USER,
@@ -62,5 +32,5 @@ export const sequelize = new Sequelize({
 
     // storage: ':memory:',
     // models: [__dirname + '/models'], // or [Player, Team],
-});
+})
 

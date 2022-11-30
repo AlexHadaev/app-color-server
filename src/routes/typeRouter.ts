@@ -1,4 +1,4 @@
-import {Router} from "express";
+import {Router} from "express"
 import {typeController} from "../controllers/typeController"
 const router = Router()
 
@@ -7,4 +7,4 @@ router.get('/', typeController.getAll)
 router.delete('/:id', typeController.delete)
 
 
-export default router;
+export default router

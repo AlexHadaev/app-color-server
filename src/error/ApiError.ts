@@ -7,6 +7,9 @@ export class ApiError{
     static badRequest(message: string){
         return new ApiError(404, message)
     }
+    static noResult(){
+        return new ApiError(200,  'no result')
+    }
     static internal(message: string){
         return new ApiError(500, message)
     }

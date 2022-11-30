@@ -1,4 +1,4 @@
-import {Column, DataType, ForeignKey, HasMany, Model, Table} from 'sequelize-typescript';
+import {Column, DataType, ForeignKey, HasMany, Model, Table} from 'sequelize-typescript'
 
 @Table({
     tableName: "colors"
@@ -10,23 +10,17 @@ export class Color extends Model {
         unique: true,
         allowNull: false
     })
-    declare color: string;
+    declare rgb: string
 
     @Column({
         type: DataType.STRING,
         allowNull: false
     })
-    declare shadow: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    declare colorHEXA: string;
+    declare hex: string
 
     @ForeignKey(() => Type)
     @Column
-    declare typeId: number;
+    declare typeId: number
 
 }
 
@@ -37,12 +31,12 @@ export class Color extends Model {
 export class Type extends Model {
     // @PrimaryKey
     @HasMany(() => Color, 'typeId')
-    colors!: Color[];
+    colors!: Color[]
 
     @Column({
         type: DataType.STRING,
         unique: true,
         allowNull: false
     })
-    declare name: string;
+    declare name: string
 }
