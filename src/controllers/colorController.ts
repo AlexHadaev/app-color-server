@@ -80,7 +80,7 @@ class ColorController {
             const {dataValues}: any = await Color.findOne({where: {id}})
             const {rows} = await Color.findAndCountAll({
                 where: {typeId: dataValues.typeId, id: {[Op.ne]: id}},
-                order: [['rgb', 'ASC']],
+                order: [sequelize.random(), ['rgb', 'DESC']],
                 limit: 5,
             })
 
