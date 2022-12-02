@@ -13,12 +13,8 @@ class ColorController {
 
             for (let i = 0; i <= colorScheme.length - 1; i++) {
                 await Type.findOrCreate({
-                    where: {
-                        name: colorScheme[i].typeColor
-                    },
-                    defaults: {
-                        name: colorScheme[i].typeColor
-                    }
+                    where: {name: colorScheme[i].typeColor},
+                    defaults: {name: colorScheme[i].typeColor}
                 })
             }
 
@@ -38,9 +34,9 @@ class ColorController {
 
     async create(req: Request, res: Response, next: any) {
         try {
-            const {color, shadow, typeId, colorHEXA} = req.body
+            const {rgb, hex, typeId} = req.body
 
-            const colors = await Color.create({color, shadow, typeId, colorHEXA})
+            const colors = await Color.create({rgb, hex, typeId})
 
             return res.json(colors)
         } catch (e: any) {
@@ -84,7 +80,7 @@ class ColorController {
             const {dataValues}: any = await Color.findOne({where: {id}})
             const {rows} = await Color.findAndCountAll({
                 where: {typeId: dataValues.typeId, id: {[Op.ne]: id}},
-                order: [['rgb', 'DESC']],
+                order: [['rgb', 'ASC']],
                 limit: 5,
             })
 
@@ -97,15 +93,15 @@ class ColorController {
 
     async getRandom(req: Request, res: Response, next: any) {
         try {
-            const {typeId} = req.params
+            const {typeId} = req.query
 
             const options = typeId ?
                 {where: {typeId: typeId}, order: sequelize.random(), limit: 1} :
                 {order: sequelize.random(), limit: 1}
 
-            const colorId = await Color.findAll(options)
+            const color = await Color.findAll(options)
 
-            return res.json(colorId)
+            return res.json(color[0].id)
         } catch (e: any) {
             next(res.json(ApiError.badRequest(e.message)))
         }

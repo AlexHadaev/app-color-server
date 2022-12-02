@@ -9,7 +9,7 @@ const optionsProduction = {
     username: process.env.DB_USER_SER,
     password: process.env.DB_PASSWORD_SER,
     host: process.env.DB_HOST_SER,
-    port: process.env.DB_PORT_SER,
+    // port: process.env.DB_PORT_SER,
     dialectOptions: {ssl: {require: true, rejectUnauthorized: false}}
 }
 
@@ -29,8 +29,8 @@ export const sequelize = new Sequelize({
     logging: false,
     ...sequelizeOptions, // Spread options here
     models: [Color, Type],
-
     // storage: ':memory:',
     // models: [__dirname + '/models'], // or [Player, Team],
 })
+
 

@@ -63,7 +63,7 @@ export function getRandomGroupColors(colorScheme: IColorScheme, types: Type[], c
             colors.push(objectGroupColors)
             i++
             j++
-            if (i % 7 === 0) j = 0
+            if (i % 8 === 0) j = 0
         }
 
     }
