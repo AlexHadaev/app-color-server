@@ -21,7 +21,7 @@ class ColorController {
             const types: Type[] = await Type.findAll()
 
             const randomGroupColors: Array<{}> = getRandomGroupColors(colorScheme, types, count)
-            const splitGroupColors:{}[][] = splitArray(randomGroupColors, 3);
+            const splitGroupColors:{}[][] = splitArray(randomGroupColors, 100);
             let resultColors:{}[][] = [];
 
             for (const arrColors of splitGroupColors) {
