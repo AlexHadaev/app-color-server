@@ -3,7 +3,7 @@ import {Request, Response} from "express"
 import {ApiError} from "../error/ApiError"
 import {sequelize} from "../db"
 import {Op, Order} from "sequelize"
-import {getRandomGroupColors} from "../services/colorControllsUtility"
+import {getRandomGroupColors, splitArray} from "../services/colorControllsUtility"
 import {colorScheme} from "../services/colorScheme"
 
 class ColorController {
@@ -21,10 +21,15 @@ class ColorController {
             const types: Type[] = await Type.findAll()
 
             const randomGroupColors: Array<{}> = getRandomGroupColors(colorScheme, types, count)
+            const splitGroupColors:{}[][] = splitArray(randomGroupColors, 3);
+            let resultColors:{}[][] = [];
 
-            const colors = await Color.bulkCreate(randomGroupColors)
+            for (const arrColors of splitGroupColors) {
+                const colors:Color[] = await Color.bulkCreate(arrColors)
+                resultColors.push(colors)
+            }
 
-            return res.json(colors)
+            return res.json(resultColors)
         } catch (e: any) {
             next(res.json(ApiError.internal(e.message)))
         }

@@ -70,3 +70,11 @@ export function getRandomGroupColors(colorScheme: IColorScheme, types: Type[], c
     while (i <= countColors)
     return colors
 }
+
+export const splitArray = (array:{}[], size:number) => {
+    let subarray = []
+    for (let i = 0; i < Math.ceil(array.length/size); i++){
+        subarray[i] = array.slice((i*size), (i*size) + size)
+    }
+    return subarray
+}
